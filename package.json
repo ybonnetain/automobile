@@ -23,12 +23,7 @@
         "chai": "^4.2.0",
         "chai-as-promised": "^7.1.1",
         "cucumber": "6.0.5",
-"protractor-cucumber-framework": "^6.2.0",
         "underscore": "^1.9.1",
-"wd": "1.12.1",
         "webdriverio": "^5.18.7"
-    },
-"devDependencies": {
-    "wdio-cucumber-framework": "^2.2.8"
-}
+    }
 }

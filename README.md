@@ -2,27 +2,19 @@
 
 Gherkin based end-to-end automations for react-native iOS and Android
 
-
-
 https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio
 
 ## Stack
 
 - cucumber-js
-- web-driver / Selenium
+- webdriverio
 - Appium
-- node 10 (at this time node12+ has issues with `fibers`)
 
 ## Installation
 
-- [Desktop Appium Server](https://github.com/appium/appium-desktop/releases/tag/v1.13.0)
-
-- Or Appium standalone server -> `npm install appium -g` (more likely we want to install it on CI)
-
-- npm i -g node-gyp
+- Appium server `npm install appium -g`
 
 - npm install
-
 
 ## Configuration
 
@@ -30,9 +22,8 @@ Two things
 
 Ask `appium-doctor` to see what else you need with `npm run appium-doctor` on the instumentations proxy wise
 
-- Configure WD `npx wdio config`
 
-
+DEVEL
 
 
 ```
@@ -49,23 +40,6 @@ gem install xcpretty  # optional
         "selenium-webdriver": "^4.0.0-alpha.1",
 
 
-
-
-# @ios
-# Scenario: Trying to authenticate without login
-#   Given that I start the iOS application as a disconnected user
-#   When I press on iOS element "buttonLogin"
-#   Then I should see the text "login is required" in the element "Login Form Error" by testId
-        //
-
-
-
-
-
-
-## Docs
-
-- [cucumber timouts](https://github.com/cucumber/cucumber-js/blob/master/docs/support_files/timeouts.md)
 
 ## Settings
 
