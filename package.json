@@ -1,7 +1,7 @@
 {
     "name": "gmapp-e2e",
     "version": "0.0.1",
-    "description": "iOS / Android end-2-end testing stack",
+    "description": "Gherkin based end-to-end automations for react-native iOS and Android",
     "main": "index.js",
     "scripts": {
         "android": "better-npm-run test:func:android",

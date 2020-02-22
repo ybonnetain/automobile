@@ -2,13 +2,21 @@
 
 Gherkin based end-to-end automations for react-native iOS and Android
 
-https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio
-
 ## Stack
 
 - cucumber-js
+
+https://github.com/cucumber/cucumber-js
+
 - webdriverio
+
+https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio
+
 - Appium
+
+https://appiumpro.com/editions/76
+
+https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/test/basic/ios-basic-interactions.test.js
 
 ## Installation
 
@@ -18,28 +26,7 @@ https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio
 
 ## Configuration
 
-Two things
-
-Ask `appium-doctor` to see what else you need with `npm run appium-doctor` on the instumentations proxy wise
-
-
-DEVEL
-
-
-```
-brew install libimobiledevice --HEAD
-brew install carthage
-brew install node
-npm install -g appium
-npm install wd
-npm install -g ios-deploy
-gem install xcpretty  # optional
-```
-// dev
-"protractor-cucumber-framework": "6.2.0",
-        "selenium-webdriver": "^4.0.0-alpha.1",
-
-
+Ask `appium-doctor` to see what else you need with `npm run appium-doctor` :)
 
 ## Settings
 

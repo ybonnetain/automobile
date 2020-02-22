@@ -2,7 +2,11 @@ const wdio = require('webdriverio');
 const cucumber = require('cucumber')
 const assert = require('chai').assert;
 
-const { Before, Given, Then, When, setDefaultTimeout } = cucumber;
+const { After, Before, Given, Then, When, setDefaultTimeout } = cucumber;
+
+let client;
+
+setDefaultTimeout(10000);
 
 const opts = {
   port: 4723,
@@ -20,21 +24,15 @@ const opts = {
     }
 };
 
-setDefaultTimeout(10000);
-
-let client;
-
 Before({ timeout: 150 * 10000 } , async () => {
   client = await wdio.remote(opts);
 });
 
-Given('that I start the iOS application as a disconnected user', async function () {
-  // setTimeout(async () => {
-  //   const element = await client.findElement('class name', 'XCUIElementTypeApplication');
-  //   await client.getElementAttribute(element.ELEMENT, 'name').then((attr) => {
-  //     assert.equal(attr, 'Groupe Mutuel');
-  //   });
-  // }, 5000);
+// After(async () => {
+//   await client.deleteSession();
+// })
+
+Given('that I start the iOS application', async function () {
   const element = await client.findElement('class name', 'XCUIElementTypeApplication');
   await client.getElementAttribute(element.ELEMENT, 'name').then((attr) => {
     assert.equal(attr, 'Groupe Mutuel');
