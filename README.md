@@ -2,7 +2,7 @@
 
 Gherkin based end-to-end automations for react-native iOS and Android
 
-TODO: logo
+![logo](https://github.com/ybonnetain/automobile/blob/master/static/logo.png)
 
 Let's configure a project path, then crawl its sources looking for `feature` files
 
