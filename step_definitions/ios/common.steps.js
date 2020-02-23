@@ -2,7 +2,14 @@ const wdio = require('webdriverio');
 const cucumber = require('cucumber')
 const assert = require('chai').assert;
 
-const { After, Before, Given, Then, When, setDefaultTimeout } = cucumber;
+const {
+  After,
+  Before,
+  Given,
+  When,
+  Then,
+  setDefaultTimeout,
+} = cucumber;
 
 let client;
 
@@ -24,6 +31,10 @@ const opts = {
     }
 };
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(() => resolve(true), ms));
+}
+
 Before({ timeout: 150 * 10000 } , async () => {
   client = await wdio.remote(opts);
 });
@@ -32,20 +43,21 @@ Before({ timeout: 150 * 10000 } , async () => {
 //   await client.deleteSession();
 // })
 
-Given('that I start the iOS application', async function () {
+Given('that I start the app', async function () {
   const element = await client.findElement('class name', 'XCUIElementTypeApplication');
   await client.getElementAttribute(element.ELEMENT, 'name').then((attr) => {
     assert.equal(attr, 'Groupe Mutuel');
   });
+  await sleep(7000);
 });
 
-When('I press on iOS element {string}', function (arg1) {
-  setTimeout(async () => {
-    const element = await client.findElement('accessibility id', 'password_forgotten');
-    await client.elementClick(element.ELEMENT);
-  }, 5000);
-  // const element = await client.findElement('accessibility id', 'password_forgotten');
-  // await client.elementClick(element.ELEMENT);
+When('I press element {string}', async function (arg1) {
+  const element = await client.findElement('accessibility id', arg1);
+  await client.elementClick(element.ELEMENT);
+});
+
+When('I fill element {string} with {string}', async function (arg1, arg2) {
+  return 'pending';
 });
 
 Then('I should see the text {string} in the element {string} by testId', function (string, string2) {

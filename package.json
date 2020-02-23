@@ -1,7 +1,7 @@
 {
-    "name": "gmapp-e2e",
+    "name": "automobile",
     "version": "0.0.1",
-    "description": "Gherkin based end-to-end automations for react-native iOS and Android",
+    "description": "Gherkin based end-to-end automations for iOS and Android",
     "main": "index.js",
     "scripts": {
         "android": "better-npm-run test:func:android",
@@ -9,10 +9,10 @@
     },
     "betterScripts": {
         "test:func:android": {
-            "command": "node ./node_modules/.bin/cucumber-js --tags @android ./features -r ./step_definitions/android/*/js"
+            "command": "node import-tests.js && node ./node_modules/.bin/cucumber-js --tags @android ./features -r ./step_definitions/android/*/js"
         },
         "test:func:ios": {
-            "command": "node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/*.js"
+            "command": "node import-tests.js && node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/*.js"
         }
     },
     "author": "Yann Bonnetain <yann.bonnetain@gmail.com>",
@@ -23,7 +23,7 @@
         "chai": "^4.2.0",
         "chai-as-promised": "^7.1.1",
         "cucumber": "6.0.5",
-        "underscore": "^1.9.1",
+        "dotenv": "^8.2.0",
         "webdriverio": "^5.18.7"
     }
 }
