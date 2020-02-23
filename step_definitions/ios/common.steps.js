@@ -10,6 +10,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(() => resolve(true), ms));
 }
 
+// TODO: keep ?
 setDefaultTimeout(10000);
 
 Before({ timeout: 150 * 10000 } , async () => {
@@ -47,11 +48,22 @@ When('I press element {string}', async (arg1) => {
   await client.elementClick(element.ELEMENT);
 });
 
+// TODO: go key by key ?
 When('I fill element {string} with {string}', async (arg1, arg2) => {
+  const element = await client.findElement('accessibility id', arg1);
+  // In order to work on sim unable
+  // `Simulator -> Hardware -> Keyboard -> Connect Hardware Keyboard`
+  client.elementSendKeys(element.ELEMENT, arg2);
+  await sleep(2000);
+});
+
+Then('I should have {string} in element {string}', async (arg1, arg2) => {
+  // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-Then('I should have {string} in element {string}', async (string, string2) => {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+Then('I should have alert {string}', async (arg1) => {
+  await sleep(3000);
+  assert.equal(String(await client.getAlertText()), `Error
+Password or email is invalid`);
 });

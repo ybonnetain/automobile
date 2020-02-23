@@ -43,18 +43,18 @@ const walk = (dir, done) => {
   });
 };
 
-walk(process.env.FEATURES_ROOT_PATH, (err, data) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
+// walk(process.env.FEATURES_ROOT_PATH, (err, data) => {
+//   if (err) {
+//     console.error(err);
+//     process.exit(1);
+//   }
 
-  data.forEach(file => {
-    if (file.includes('.feature')) {
-      const filename = file.split('/').pop();
-      debug('Copy %o to features', filename);
-      fs.copyFileSync(file, `${featuresLocalDir}${filename}`);
-    }
-  });
-  debug('Start Cucumber test suites');
-});
+//   data.forEach(file => {
+//     if (file.includes('.feature')) {
+//       const filename = file.split('/').pop();
+//       debug('Copy %o to features', filename);
+//       fs.copyFileSync(file, `${featuresLocalDir}${filename}`);
+//     }
+//   });
+//   debug('Start Cucumber test suites');
+// });

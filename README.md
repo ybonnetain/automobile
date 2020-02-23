@@ -1,6 +1,6 @@
 # automobile
 
-Gherkin based end-to-end automations for react-native iOS and Android
+Gherkin based end-to-end automations for iOS and Android
 
 ![logo](https://github.com/ybonnetain/automobile/blob/master/static/logo.png)
 
@@ -12,8 +12,7 @@ Then handle the specs with common steps definitions:
 - When I press `element`
 - When I fill `element` with `value`
 - Then I should have `value` in `element`
-
-etc ..
+- Then I should have alert `value`
 
 ## Stack
 
@@ -74,6 +73,10 @@ TODO: Android
 - get sim / device UUID
 
 `instruments -s devices` or `xcrun simctl list`
+
+- `driver:elementSendKeys(Element: e, String: keys)`
+
+In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware Keyboard`
 
 ### Android
 
