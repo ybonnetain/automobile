@@ -9,10 +9,16 @@
     },
     "betterScripts": {
         "test:func:android": {
-            "command": "node import-tests.js && node ./node_modules/.bin/cucumber-js --tags @android ./features -r ./step_definitions/android/*/js"
+            "env": {
+                "DEBUG": "automobile:*"
+            },
+            "command": "node bootstrap.js && node ./node_modules/.bin/cucumber-js --tags @android ./features -r ./step_definitions/android/*/js"
         },
         "test:func:ios": {
-            "command": "node import-tests.js && node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/*.js"
+            "env": {
+                "DEBUG": "automobile:*"
+            },
+            "command": "node bootstrap.js && node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/*.js"
         }
     },
     "author": "Yann Bonnetain <yann.bonnetain@gmail.com>",
@@ -23,6 +29,7 @@
         "chai": "^4.2.0",
         "chai-as-promised": "^7.1.1",
         "cucumber": "6.0.5",
+        "debug": "^4.1.1",
         "dotenv": "^8.2.0",
         "webdriverio": "^5.18.7"
     }

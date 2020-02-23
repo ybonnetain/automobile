@@ -7,10 +7,10 @@ Feature: Login
 Scenario: Trying to authenticate without login
   Given that I start the app
   When I press element "//android.widget.TextView[@text='LOG IN']"
-  Then I should see the text "login is required" in the element "Login Form Error" by accessibilityId
+  Then I should have "login is required" in element "Login Form Error"
 
 @ios
 Scenario: Trying to authenticate without login
   Given that I start the app
   When I press element "password_forgotten"
-  Then I should see the text "login is required" in the element "Login Form Error" by testId
+  Then I should have "login is required" in element "Login Form Error"

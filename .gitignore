@@ -2,3 +2,4 @@
 *.log
 .env
 /features/**/*.feature
+/outputs/**/*.*

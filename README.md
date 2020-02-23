@@ -9,8 +9,9 @@ Let's configure a project path, then crawl its sources looking for `feature` fil
 Then handle the specs with common steps definitions:
 
 - Given that I start the app
-- When I press element <element>
-- Then I should have <element>
+- When I press `element`
+- When I fill `element` with `value`
+- Then I should have `value` in `element`
 
 etc ..
 
@@ -36,6 +37,14 @@ https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/
 
 - npm install
 
+## Running
+
+Run `appium` server
+
+Then run `npm run <ios|android>`
+
+TODO: Appium kill script `lsof -i 4tcp:4723` with package.json binding
+
 ## Configuration
 
 Ask `appium-doctor` to see what else you need with `npm run appium-doctor` :)
@@ -43,12 +52,16 @@ Ask `appium-doctor` to see what else you need with `npm run appium-doctor` :)
 Then write `.env` at project root
 
 ```
+APPIUM_PORT=<default port=4723>
+WD_LOG_LEVEL=<trace | debug | info | warn | error | silent>
 FEATURES_ROOT_PATH=<path to start looking recursively for feature test files>
+APP_DISPLAY_NAME=<My App, used for app boot test>
 
 IOS_PLATFORM_VERSION=13.0
 IOS_DEVICE_NAME=iPhone 8
 IOS_BUNDLE_ID=<bundle id>
 IOS_DEVICE_UUID=<device or simulator uuid>
+# app path can also be a url
 IOS_APP_PATH=<.app path>
 IOS_LANGUAGE=en
 IOS_LOCALE=en_EN
@@ -56,9 +69,17 @@ IOS_LOCALE=en_EN
 
 TODO: Android
 
+### iOS
+
+- get sim / device UUID
+
+`instruments -s devices` or `xcrun simctl list`
+
+### Android
+
 ## Features
 
-Example of `feature` feeding the test runner
+Example of `feature` feeding the test runner in `./examples/`
 
 ```gerkhin
 Feature: Login
@@ -70,32 +91,18 @@ Feature: Login
 Scenario: Trying to authenticate without login
   Given that I start the app
   When I press element "//android.widget.TextView[@text='LOG IN']"
-  Then I should see the text "login is required" in the element "login_form_error"
+  Then I should have "login is required" in element "login_form_error"
 
 @ios
 Scenario: Trying to authenticate without login
   Given that I start the app
   When I press element "buttonLogin"
-  Then I should see the text "login is required" in the element "login_form_error"
+  Then I should have "login is required" in element "login_form_error"
 ```
 
-### iOS
+## Reporting
 
-- get sim / device UUID
-
-`instruments -s devices` or `xcrun simctl list`
-
-
-### Android
-
-
-## Running
-
-Run `appium`
-
-Run `npm run ios`
-
-Run `npm run android`
+TODO: `--format=json | tee outputs/android-report.json` ok that work but I would like to keep the console output with colors
 
 ## React Native Users
 

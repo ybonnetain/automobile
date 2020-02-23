@@ -1,8 +1,21 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+const debug = require('debug')('automobile:boostrap');
 
+console.log(' ');
 const featuresLocalDir = `${__dirname}${path.sep}features${path.sep}`;
+
+debug('features @ %o', featuresLocalDir);
+debug('iOS App @ %o', process.env.IOS_APP_PATH);
+debug('Android App @ %o', process.env.ANDROID_APP_PATH);
+
+// check feature sources exist
+
+if (!fs.existsSync(process.env.FEATURES_ROOT_PATH)) {
+  debug('Features path %o does not exists', process.env.FEATURES_ROOT_PATH);
+  process.exit(1);
+}
 
 const walk = (dir, done) => {
   let results = [];
@@ -36,13 +49,12 @@ walk(process.env.FEATURES_ROOT_PATH, (err, data) => {
     process.exit(1);
   }
 
-// data.sort();
-
   data.forEach(file => {
     if (file.includes('.feature')) {
-      console.log('cp', file);
       const filename = file.split('/').pop();
+      debug('Copy %o to features', filename);
       fs.copyFileSync(file, `${featuresLocalDir}${filename}`);
     }
   });
+  debug('Start Cucumber test suites');
 });

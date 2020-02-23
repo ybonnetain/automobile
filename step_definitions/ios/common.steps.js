@@ -2,65 +2,56 @@ const wdio = require('webdriverio');
 const cucumber = require('cucumber')
 const assert = require('chai').assert;
 
-const {
-  After,
-  Before,
-  Given,
-  When,
-  Then,
-  setDefaultTimeout,
-} = cucumber;
+const { After, Before, Given, When, Then, setDefaultTimeout } = cucumber;
 
 let client;
-
-setDefaultTimeout(10000);
-
-const opts = {
-  port: 4723,
-  capabilities: {
-      browserName: '',
-      platformName: 'iOS',
-      platformVersion: '13.0',
-      deviceName: 'iPhone 8',
-      bundleId: 'com.konstruktor.GroupeMutuel',
-      udid: 'EFF854A8-DE96-4B17-AA27-F04686F66A9B',
-      // app can also take a url
-      app: '/Users/ybonneta/Library/Developer/Xcode/DerivedData/GroupeMutuelFrontGateway-btynqfvmgjasjubinifgdsxqnlft/Build/Products/Debug-iphonesimulator/GroupeMutuelFrontGateway.app',
-      //language: 'en',
-      //locale: 'en_EN',
-    }
-};
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(() => resolve(true), ms));
 }
 
+setDefaultTimeout(10000);
+
 Before({ timeout: 150 * 10000 } , async () => {
-  client = await wdio.remote(opts);
+  client = await wdio.remote({
+    port: Number(process.env.APPIUM_PORT),
+    logLevel: process.env.WD_LOG_LEVEL,
+    capabilities: {
+        browserName: '',
+        platformName: 'iOS',
+        platformVersion: process.env.IOS_PLATFORM_VERSION,
+        deviceName: process.env.IOS_DEVICE_NAME,
+        bundleId: process.env.IOS_BUNDLE_ID,
+        udid: process.env.IOS_DEVICE_UUID,
+        app: process.env.IOS_APP_PATH,
+        language: process.env.IOS_LANGUAGE,
+        locale: process.env.IOS_LOCALE
+      },
+    });
 });
 
 // After(async () => {
 //   await client.deleteSession();
 // })
 
-Given('that I start the app', async function () {
+Given('that I start the app', async () => {
   const element = await client.findElement('class name', 'XCUIElementTypeApplication');
   await client.getElementAttribute(element.ELEMENT, 'name').then((attr) => {
-    assert.equal(attr, 'Groupe Mutuel');
+    assert.equal(attr, process.env.APP_DISPLAY_NAME);
   });
   await sleep(7000);
 });
 
-When('I press element {string}', async function (arg1) {
+When('I press element {string}', async (arg1) => {
   const element = await client.findElement('accessibility id', arg1);
   await client.elementClick(element.ELEMENT);
 });
 
-When('I fill element {string} with {string}', async function (arg1, arg2) {
+When('I fill element {string} with {string}', async (arg1, arg2) => {
   return 'pending';
 });
 
-Then('I should see the text {string} in the element {string} by testId', function (string, string2) {
+Then('I should have {string} in element {string}', async (string, string2) => {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
