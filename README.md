@@ -74,7 +74,7 @@ TODO: Android
 
 `instruments -s devices` or `xcrun simctl list`
 
-- `driver:elementSendKeys(Element: e, String: keys)`
+- `driver:elementSendKeys(el: Element, keys: string)`
 
 In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware Keyboard`
 
