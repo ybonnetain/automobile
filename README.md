@@ -2,6 +2,8 @@
 
 Gherkin based end-to-end automations for iOS and Android
 
+TODO: there is still a lot to do on Android
+
 ![logo](https://github.com/ybonnetain/automobile/blob/master/static/logo.png)
 
 Let's configure a project path, then crawl its sources looking for `feature` files
@@ -22,6 +24,8 @@ https://github.com/cucumber/cucumber-js
 
 - webdriverio
 
+https://webdriver.io/docs/api/webdriver.html
+
 https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio
 
 - Appium
@@ -34,15 +38,7 @@ https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/
 
 (Depending on our needs Appium Desktop might be a better choice)
 
-- npm install
-
-## Running
-
-Run `appium` server
-
-Then run `npm run <ios|android>`
-
-TODO: Appium kill script `lsof -i 4tcp:4723` with package.json binding
+- `yarn install`
 
 ## Configuration
 
@@ -80,27 +76,41 @@ In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware
 
 ### Android
 
+## Running
+
+Run `appium` server
+
+Then run `npm run <ios|android>`
+
+TODO: Appium kill script `lsof -i 4tcp:4723` with package.json binding
+
 ## Features
 
 Example of `feature` feeding the test runner in `./examples/`
 
 ```gerkhin
-Feature: Login
+Feature: 1_Auth
   As a user of the application
-  I should be able to authenticate
-  And should be presented with appropriate error messages
-
-@android
-Scenario: Trying to authenticate without login
-  Given that I start the app
-  When I press element "//android.widget.TextView[@text='LOG IN']"
-  Then I should have "login is required" in element "login_form_error"
+  I should be presented with invalid username / password error message
+  When giving invalid username / password
 
 @ios
-Scenario: Trying to authenticate without login
-  Given that I start the app
-  When I press element "buttonLogin"
-  Then I should have "login is required" in element "login_form_error"
+Scenario: Trying to authenticate with wrong password
+  Given that I have completed previous step
+  When I fill element "email" with "test@email.com"
+  When I fill element "password" with "kopasswd"
+  When I press element "button_login"
+  When I wait for 5000 ms
+  Then I should have alert "Password or email is invalid"
+
+@android
+Scenario: Trying to authenticate with wrong password
+  Given that I have completed previous step
+  When I fill element "email" with "test@email.com"
+  When I fill element "password" with "kopasswd"
+  When I press element "button_login"
+  When I wait for 5000 ms
+  Then I should have alert "Password or email is invalid"
 ```
 
 ## Reporting

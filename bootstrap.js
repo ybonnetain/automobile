@@ -1,60 +1,39 @@
 require('dotenv').config();
-const fs = require('fs');
+const wdio = require('webdriverio');
 const path = require('path');
-const debug = require('debug')('automobile:boostrap');
+const logWD = require('debug')('automobile:webdriverio');
+const logCucumber = require('debug')('automobile:cucumber');
 
 console.log(' ');
 const featuresLocalDir = `${__dirname}${path.sep}features${path.sep}`;
 
-debug('features @ %o', featuresLocalDir);
-debug('iOS App @ %o', process.env.IOS_APP_PATH);
-debug('Android App @ %o', process.env.ANDROID_APP_PATH);
+logCucumber('Start Cucumber test suites');
+logCucumber('features @ %o', featuresLocalDir);
+logCucumber('iOS App @ %o', process.env.IOS_APP_PATH);
+logCucumber('Android App @ %o', process.env.ANDROID_APP_PATH);
 
-// check feature sources exist
-
-if (!fs.existsSync(process.env.FEATURES_ROOT_PATH)) {
-  debug('Features path %o does not exists', process.env.FEATURES_ROOT_PATH);
-  process.exit(1);
-}
-
-const walk = (dir, done) => {
-  let results = [];
-  fs.readdir(dir, (err, list) => {
-    if (err) return done(err);
-    var pending = list.length;
-    if (!pending) return done(null, results);
-      list.forEach(file => {
-        file = path.resolve(dir, file);
-        fs.stat(file, (err, stat) => {
-          if (err) return done(err);
-          if (stat && stat.isDirectory()) {
-            results.push(file);
-            walk(file, (err, res) => {
-              if (err) return done(err);
-              results = results.concat(res);
-              if (!--pending) done(null, results);
-            });
-          } else {
-            results.push(file);
-            if (!--pending) done(null, results);
-          }
-        });
-      });
+const getIosDriver = async () => {
+  logWD('init connection to Appium');
+  return wdio.remote({
+    port: Number(process.env.APPIUM_PORT),
+    logLevel: process.env.WD_LOG_LEVEL,
+    capabilities: {
+      browserName: '',
+      platformName: 'iOS',
+      platformVersion: process.env.IOS_PLATFORM_VERSION,
+      deviceName: process.env.IOS_DEVICE_NAME,
+      bundleId: process.env.IOS_BUNDLE_ID,
+      udid: process.env.IOS_DEVICE_UUID,
+      app: process.env.IOS_APP_PATH,
+      language: process.env.IOS_LANGUAGE,
+      locale: process.env.IOS_LOCALE
+    },
   });
 };
 
-// walk(process.env.FEATURES_ROOT_PATH, (err, data) => {
-//   if (err) {
-//     console.error(err);
-//     process.exit(1);
-//   }
+const getAndroidDriver = async () => {
+  logWD('init connection to Appium');
+  // TODO
+};
 
-//   data.forEach(file => {
-//     if (file.includes('.feature')) {
-//       const filename = file.split('/').pop();
-//       debug('Copy %o to features', filename);
-//       fs.copyFileSync(file, `${featuresLocalDir}${filename}`);
-//     }
-//   });
-//   debug('Start Cucumber test suites');
-// });
+module.exports = { getIosDriver, getAndroidDriver };

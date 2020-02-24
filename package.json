@@ -12,13 +12,13 @@
             "env": {
                 "DEBUG": "automobile:*"
             },
-            "command": "node bootstrap.js && node ./node_modules/.bin/cucumber-js --tags @android ./features -r ./step_definitions/android/*/js"
+            "command": "node import-features.js && node ./node_modules/.bin/cucumber-js --tags @android ./features -r ./step_definitions/android/common.steps.js"
         },
         "test:func:ios": {
             "env": {
                 "DEBUG": "automobile:*"
             },
-            "command": "node bootstrap.js && node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/*.js"
+            "command": "node import-features.js && node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/common.steps.js"
         }
     },
     "author": "Yann Bonnetain <yann.bonnetain@gmail.com>",
