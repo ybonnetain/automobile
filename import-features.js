@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+const rimraf = require('rimraf');
 const logFeatures = require('debug')('automobile:features');
 
 console.log(' ');
@@ -65,6 +66,7 @@ const getFeatures = () => {
 
 const main = async () => {
   try {
+    rimraf.sync(`${featuresLocalDir}*`);
     await getFeatures();
   } catch (error) {
     console.error(error);

@@ -1,0 +1,58 @@
+{
+	"that I have completed previous step": {
+		"prefix": "that I have completed previous step",
+		"body": [
+			"that I have completed previous step",
+		],
+		"description": "assume previous step done"
+	},
+	"I wait for {int} ms": {
+		"prefix": "I wait for {int} ms",
+		"body": [
+			"I wait for $1 ms",
+		],
+		"description": "wait on step"
+	},
+	"I dismiss the keyboard": {
+		"prefix": "I dismiss the keyboard",
+		"body": [
+			"I dismiss the keyboard",
+		],
+		"description": "hide keyboard"
+	},
+	"I press element {string}": {
+		"prefix": "I press element {string}",
+		"body": [
+			"I press element \"$1\"",
+		],
+		"description": "press some element"
+	},
+	"I fill element {string} with {string}": {
+		"prefix": "I fill element {string} with {string}",
+		"body": [
+			"I fill element \"$1\" with \"$2\"",
+		],
+		"description": "fill some element"
+	},
+	"I clear {string}": {
+		"prefix": "I clear {string}",
+		"body": [
+			"I clear \"$1\"",
+		],
+		"description": "clear an element (like TextField)"
+	},
+	"I should have {string} in element {string}": {
+		"prefix": "I should have {string} in element {string}",
+		"body": [
+			"I should have \"$1\" in element \"$2\"",
+		],
+		"description": "assert value in element"
+	},
+	"I should have alert {string}": {
+		"prefix": "I should have alert {string}",
+		"body": [
+			"I should have alert \"$1\"",
+		],
+		"description": "assert value in alert"
+	},
+}

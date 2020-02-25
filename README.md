@@ -4,17 +4,15 @@ Gherkin based end-to-end automations for iOS and Android
 
 TODO: there is still a lot to do on Android
 
+TODO: gestures -> https://webdriver.io/docs/api/element/touchAction.html
+
 ![logo](https://github.com/ybonnetain/automobile/blob/master/static/logo.png)
 
 Let's configure a project path, then crawl its sources looking for `feature` files
 
 Then handle the specs with common steps definitions:
 
-- Given that I start the app
-- When I press `element`
-- When I fill `element` with `value`
-- Then I should have `value` in `element`
-- Then I should have alert `value`
+Have a look at VS-Code snippets in `./share/feature.code-snippets`
 
 ## Stack
 
@@ -34,7 +32,7 @@ https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/
 
 ## Installation
 
-- Appium server `npm install appium -g`
+- Appium server `npm install appium -g` (tested with v1.16.0)
 
 (Depending on our needs Appium Desktop might be a better choice)
 
@@ -78,9 +76,7 @@ In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware
 
 ## Running
 
-Run `appium` server
-
-Then run `npm run <ios|android>`
+Run the whole with `appium & npm run <ios|android>`
 
 TODO: Appium kill script `lsof -i 4tcp:4723` with package.json binding
 

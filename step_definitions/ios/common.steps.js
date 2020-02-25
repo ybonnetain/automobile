@@ -19,7 +19,6 @@ const sleep = (ms) => {
 
 setDefaultTimeout(10000);
 
-// give a nice big timeout for the driver to start before running first scenario
 Before({ timeout: 150 * 10000 } , async () => {
   if (!client) {
     client = await getDriver();
@@ -31,15 +30,19 @@ Given('that I start the app', async () => {
   await client.getElementAttribute(element.ELEMENT, 'name').then((attr) => {
     assert.equal(attr, process.env.APP_DISPLAY_NAME);
   });
-  await sleep(7000);
+  await sleep(5000);
 });
 
 Given('that I have completed previous step', async () => {
-  await sleep(1000);
+  await sleep(200);
 });
 
 When('I wait for {int} ms', async (arg1) => {
   await sleep(arg1);
+});
+
+When('I dismiss the keyboard', () => {
+  client.hideKeyboard();
 });
 
 When('I press element {string}', async (arg1) => {
@@ -55,11 +58,10 @@ When('I fill element {string} with {string}', async (arg1, arg2) => {
 });
 
 // canot make clearValue() work :(
-// and what follows is a bearly working hack as it leaves \u008 in the filed
-
-When('I clear {string} from {string}', async (arg1, arg2) => {
-  const element = await client.findElement('accessibility id', arg2);
-  client.elementSendKeys(element.ELEMENT,'\\u008');
+// however, it seems that sending an 'empty key stroke' does the job :/
+When('I clear {string}', async (arg1) => {
+  const element = await client.findElement('accessibility id', arg1);
+  client.elementSendKeys(element.ELEMENT,'');
 });
 
 Then('I should have {string} in element {string}', async (arg1, arg2) => {
@@ -71,6 +73,6 @@ Then('I should have {string} in element {string}', async (arg1, arg2) => {
 
 Then('I should have alert {string}', async (arg1) => {
   expect(await client.getAlertText()).to.include(arg1);
-  await sleep(1000);
+  await sleep(200);
   await client.acceptAlert();
 });
