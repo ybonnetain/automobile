@@ -76,15 +76,19 @@ In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware
 
 ## Running
 
-Run the stack in dev mode
+1. Run the stack in dev mode
 
-- Appium must started
+- Appium must be started
 
 - Required device must be booted
 
-- Then run tests suites with `appium & npm run <ios|android>`
+- Then run tests suites with `npm run <ios|android>`
 
-Run the stack from a CI script with `./run-<ios|android>` (it runs everything as configured)
+2. Mount the stack and run all suites from a CI script
+
+- iOS simulator run with `./run-ios-with-sim.sh`
+
+- Android emulator TODO
 
 ## Features
 
