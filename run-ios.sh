@@ -8,17 +8,14 @@ yellow='\033[1;33m'
 red='\033[0;31m'
 nc='\033[0m'
 
-echo "\n 🚗 ${bold}${yellow}AuToMoBiLe${nc}${normal}\n"
+echo "\n 🚗 \n"
 
+APP_PATH=$(grep IOS_APP_PATH .env | cut -d '=' -f2)
+APPIUM_PORT=$(grep APPIUM_PORT .env | cut -d '=' -f2)
 DEVICE_UUID=$(grep IOS_DEVICE_UUID .env | cut -d '=' -f2)
 FEATURES_ROOT_PATH=$(grep FEATURES_ROOT_PATH .env | cut -d '=' -f2)
-APP_PATH=$(grep IOS_APP_PATH .env | cut -d '=' -f2)
 
 
-
-# TODO : stop appium lsof -i 4tcp:
-
-# + start appium bg
 
 # check config
 
@@ -80,14 +77,32 @@ while [ "$n" -lt 15 ]; do
     echo " ${s// /#}\r\c"
 done
 
-# echo ' [#####                     ](33%)\r\c'
-# sleep 5
-# echo ' [#############             ](66%)\r\c'
-# sleep 5
-# echo ' [##########################](100%)\r\c'
-# echo '\n'
-
 echo " ✅ Woke up after 15s\n"
+
+
+# restart Appium
+
+APPIUM_PID=$(lsof -i 4tcp:$APPIUM_PORT | xargs | awk '{print $11}')
+if [ $APPIUM_PID -eq ""]; then
+    printf "%-100s[ ${yellow}OK${nc} ]\n" " 🔹 appium pid not running, move on"
+else
+    printf "%-100s[ ${yellow}OK${nc} ]\n" " 🔹 found Appium pid $APPIUM_PID"
+    kill -9 $APPIUM_PID
+    printf "%-100s[ ${yellow}OK${nc} ]\n" " 🔹 stopping Appium"
+fi;
+
+nohup appium > /dev/null 2>&1 &
+if [ $? -eq 0 ]; then
+    printf "%-100s[ ${yellow}OK${nc} ]\n" " 🔹 starting appium"
+else
+    printf "%-100s[ ${red}KO${nc} ]\n" " 🔹 starting appium"
+    exit 1
+fi
+
+sleep 10
+
+
+echo "\n ✅ appium proxy started\n"
 
 
 # import feature from target project
@@ -101,9 +116,9 @@ else
 fi
 
 
+# run test suites
 
-
-
-
-node ./node_modules/.bin/cucumber-js --tags @ios ./features -r ./step_definitions/ios/common.steps.js
-
+node ./node_modules/.bin/cucumber-js \
+     --tags @ios \
+     ./features \
+     -r ./step_definitions/ios/common.steps.js

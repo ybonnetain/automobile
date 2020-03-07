@@ -76,9 +76,15 @@ In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware
 
 ## Running
 
-Run the whole with `appium & npm run <ios|android>`
+Run the stack in dev mode
 
-TODO: Appium kill script `lsof -i 4tcp:4723` with package.json binding
+- Appium must started
+
+- Required device must be booted
+
+- Then run tests suites with `appium & npm run <ios|android>`
+
+Run the stack from a CI script with `./run-<ios|android>` (it runs everything as configured)
 
 ## Features
 
@@ -112,6 +118,12 @@ Scenario: Trying to authenticate with wrong password
 ## Reporting
 
 TODO: `--format=json | tee outputs/android-report.json` ok that work but I would like to keep the console output with colors
+
+## Trouble Shooting
+
+### simctl
+
+If `Unable to boot device in current state: Booted` while running `./run-ios` this might just mean we need to open GUI (then restart the runner script)
 
 ## React Native Users
 
