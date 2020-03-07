@@ -55,4 +55,18 @@
 		],
 		"description": "assert value in alert"
 	},
+  "I capture screen as {string}": {
+		"prefix": "I capture screen as {string}",
+		"body": [
+			"I capture screen as \"$1\"",
+		],
+		"description": "make a screenshot"
+	},
+  "It should match reference capture {string}": {
+		"prefix": "It should match reference capture {string}",
+		"body": [
+			"It should match reference capture \"$1\"",
+		],
+		"description": "png matcher"
+	}
 }

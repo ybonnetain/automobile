@@ -1,4 +1,5 @@
 const cucumber = require('cucumber');
+const spawnSync = require('child_process').spawnSync;
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 const getDriver = require('../../bootstrap.js').getIosDriver;
@@ -57,11 +58,23 @@ When('I fill element {string} with {string}', async (arg1, arg2) => {
   client.elementSendKeys(element.ELEMENT, arg2);
 });
 
-// canot make clearValue() work :(
-// however, it seems that sending an 'empty key stroke' does the job :/
 When('I clear {string}', async (arg1) => {
   const element = await client.findElement('accessibility id', arg1);
+  // canot make clearValue() work :(
+  // however, it seems that sending an 'empty key stroke' does the job :/
   client.elementSendKeys(element.ELEMENT,'');
+});
+
+When('I capture screen as {string}', (arg1) => {
+  spawnSync(
+    'xcrun',
+    ['simctl', 'io', 'booted', 'screenshot', `./var/screenshots/${arg1}`],
+    { stdio: 'inherit' },
+  );
+});
+
+Then('It should match reference capture {string}', (arg1) => {
+  //
 });
 
 Then('I should have {string} in element {string}', async (arg1, arg2) => {

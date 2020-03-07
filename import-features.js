@@ -6,6 +6,7 @@ const logFeatures = require('debug')('automobile:features');
 
 console.log(' ');
 const featuresLocalDir = `${__dirname}${path.sep}features${path.sep}`;
+const screenshotsReferencesLocalDir = `${__dirname}${path.sep}var${path.sep}screenhots${path.sep}references`;
 
 logFeatures('features @ %o', featuresLocalDir);
 
@@ -58,6 +59,12 @@ const getFeatures = () => {
           logFeatures('Copy %o to scenario sources', filename);
           fs.copyFileSync(file, `${featuresLocalDir}${filename}`);
         }
+        if (file.includes('.screenshot.png')) {
+          const filename = file.split('/').pop();
+          logFeatures('Copy %o to screenshot references', file);
+          // TODO crop as test capture + keep for reference in test suite
+          fs.copyFileSync(file, `${screenshotsReferencesLocalDir}${filename}`);
+        }
       });
       resolve(true);
     });
@@ -67,6 +74,7 @@ const getFeatures = () => {
 const main = async () => {
   try {
     rimraf.sync(`${featuresLocalDir}*`);
+    rimraf.sync(`${screenshotsReferencesLocalDir}*`);
     await getFeatures();
   } catch (error) {
     console.error(error);

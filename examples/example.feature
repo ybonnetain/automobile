@@ -1,24 +1,26 @@
-Feature: Login
+Feature: 0_Example
   As a user of the application
-  I should be able to authenticate
-  And should be presented with appropriate error messages
-
-@android
-Scenario: Trying to authenticate without login
-  Given that I start the app
-  When I press element "//android.widget.TextView[@text='LOG IN']"
-  Then I should have "login is required" in element "Login Form Error"
+  I should be presented with invalid username / password error message
+  When giving invalid username / password
 
 @ios
 Scenario: Trying to authenticate with wrong password
-  Given that I start the app
+  Given that I have completed previous step
   When I fill element "email" with "test@email.com"
   When I fill element "password" with "kopasswd"
-  When I press element "buttonLogin"
-  Then I should have alert "Error\nPassword or email is invalid"
+  When I press element "button_login"
+  When I wait for 5000 ms
+  Then I should have alert "Password or email is invalid"
+  When I capture screen as "auth_screen.screenshot.png"
+  Then It should match reference capture "auth_screen.screenshot.png"
 
-# @ios
-# Scenario: Trying to authenticate without login
-#   Given that I start the app
-#   When I press element "password_forgotten"
-#   Then I should have "login is required" in element "Login Form Error"
+@android
+Scenario: Trying to authenticate with wrong password
+  Given that I have completed previous step
+  When I fill element "email" with "test@email.com"
+  When I fill element "password" with "kopasswd"
+  When I press element "button_login"
+  When I wait for 5000 ms
+  Then I should have alert "Password or email is invalid"
+  When I capture screen as "auth_screen.screenshot.png"
+  Then It should match reference capture "auth_screen.screenshot.png"

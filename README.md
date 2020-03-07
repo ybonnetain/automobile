@@ -2,6 +2,8 @@
 
 Gherkin based end-to-end automations for iOS and Android
 
+including inflow graphical regression test support
+
 TODO: there is still a lot to do on Android
 
 TODO: gestures -> https://webdriver.io/docs/api/element/touchAction.html
@@ -35,6 +37,8 @@ https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/
 - Appium server `npm install appium -g` (tested with v1.16.0)
 
 (Depending on our needs Appium Desktop might be a better choice)
+
+- `brew install ffmpeg`
 
 - `yarn install`
 
@@ -98,30 +102,24 @@ Mount the stack and run all suites from a CI script
 
 Example of `feature` feeding the test runner in `./examples/`
 
+Also see VS-Code snippets in `./share/feature.code-snippets`
+
+And `step_definitions/**/common.steps.js` for the exhaustive list.
+
+## Graphical regression testing
+
+As part of the common steps we can include screen captures and reference capture matcher assertions
+
 ```gerkhin
-Feature: 1_Auth
-  As a user of the application
-  I should be presented with invalid username / password error message
-  When giving invalid username / password
-
-@ios
-Scenario: Trying to authenticate with wrong password
-  Given that I have completed previous step
-  When I fill element "email" with "test@email.com"
-  When I fill element "password" with "kopasswd"
-  When I press element "button_login"
-  When I wait for 5000 ms
-  Then I should have alert "Password or email is invalid"
-
-@android
-Scenario: Trying to authenticate with wrong password
-  Given that I have completed previous step
-  When I fill element "email" with "test@email.com"
-  When I fill element "password" with "kopasswd"
-  When I press element "button_login"
-  When I wait for 5000 ms
-  Then I should have alert "Password or email is invalid"
+When I capture screen as "auth_screen.screenshot.png"
+Then It should match reference capture "auth_screen.screenshot.png"
 ```
+
+If the matcher is invoked then the file must exists in the project being tested as `[name].screenshot.png`
+
+On iOS use `xcrun simctl io booted screenshot example.screenshot.png` on the same sim that will run the test suites (save the file where you like inside `FEATURE_ROOT_PATH`)
+
+On Android, TODO
 
 ## Reporting
 
