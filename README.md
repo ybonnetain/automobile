@@ -76,7 +76,9 @@ In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware
 
 ## Running
 
-1. Run the stack in dev mode
+### Devel mode
+
+Mode used while writing the `feature` files
 
 - Appium must be started
 
@@ -84,7 +86,9 @@ In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware
 
 - Then run tests suites with `npm run <ios|android>`
 
-2. Mount the stack and run all suites from a CI script
+### CI mode
+
+Mount the stack and run all suites from a CI script
 
 - iOS simulator run with `./run-ios-with-sim.sh`
 
