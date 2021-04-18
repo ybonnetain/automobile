@@ -1,82 +1,36 @@
 # automobile
 
 Gherkin based end-to-end automations for iOS and Android
-
-including inflow graphical regression test support
-
-TODO: there is still a lot to do on Android
-
-TODO: gestures -> https://webdriver.io/docs/api/element/touchAction.html
-
-![logo](https://github.com/ybonnetain/automobile/blob/master/static/logo.png)
+## How does it work
 
 Let's configure a project path, then crawl its sources looking for `feature` files
-
-Then handle the specs with common steps definitions:
-
+Then handle the specs with common steps definitions
 Have a look at VS-Code snippets in `./share/feature.code-snippets`
-
 ## Stack
 
-- cucumber-js + chai
-
-https://github.com/cucumber/cucumber-js
-
-- webdriverio
-
-https://webdriver.io/docs/api/webdriver.html
-
-https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio
-
-- Appium
-
-https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/test/basic/ios-basic-interactions.test.js
-
+- [cucumber-js](https://github.com/cucumber/cucumber-js)
+- [chaijs](https://www.chaijs.com/)
+- [webdriver API](https://webdriver.io/docs/api/webdriver.html)
+- [webdriver examples](https://github.com/appium/appium/tree/master/sample-code/javascript-webdriverio)
+- [appium](https://github.com/appium/appium/blob/master/sample-code/javascript-webdriverio/test/basic/ios-basic-interactions.test.js)
 ## Installation
 
-- Appium server `npm install appium -g` (tested with v1.16.0)
-
-(Depending on our needs Appium Desktop might be a better choice)
-
-- `brew install ffmpeg`
-
-- `yarn install`
-
+```shell
+yarn
+```
 ## Configuration
 
-Ask `appium-doctor` to see what else you need with `npm run appium-doctor` :)
+Edit `./.env`
 
-Then write `.env` at project root
-
-```
-APPIUM_PORT=<default port=4723>
-WD_LOG_LEVEL=<trace | debug | info | warn | error | silent>
-FEATURES_ROOT_PATH=<path to start looking recursively for feature test files>
-APP_DISPLAY_NAME=<My App, used for app boot test>
-
-IOS_PLATFORM_VERSION=13.0
-IOS_DEVICE_NAME=iPhone 8
-IOS_BUNDLE_ID=<bundle id>
-IOS_DEVICE_UUID=<device or simulator uuid>
-# app path can also be a url
-IOS_APP_PATH=<.app path>
-IOS_LANGUAGE=en
-IOS_LOCALE=en_EN
-```
-
-TODO: Android
-
+With the help of `npm run appium-doctor` and the following commands
 ### iOS
 
-- get sim / device UUID
-
-`instruments -s devices` or `xcrun simctl list`
-
-- `driver:elementSendKeys(el: Element, keys: string)`
-
-In order to work, disable `Simulator -> Hardware -> Keyboard -> Connect Hardware Keyboard`
+- get sim / device UUID: `instruments -s devices` or `xcrun simctl list`
+- In order to send key strokes: `Simulator -> Hardware -> Keyboard -> Connect Hardware Keyboard`
 
 ### Android
+
+TODO
 
 ## Running
 
@@ -127,6 +81,20 @@ TODO: `--format=json | tee outputs/android-report.json` ok that work but I would
 
 ## Trouble Shooting
 
+### Xcode
+
+Here is how to find the `.app` built for sim
+
+`~/Library/Developer/Xcode/DerivedData/<SCHEME>-<someUUID>/Build/Product/Debug-iphonesimulator/`
+
+Here is how to find the current app path (runtime) running in the simulator
+- Pause program execution
+- run `po NSHomeDirectory()`
+
+![logo](/static/docs/find-sim-build.png)
+
+- [Gestures](https://webdriver.io/docs/api/element/touchAction.html) - Webdriver.io touch actions
+
 ### simctl
 
 If `Unable to boot device in current state: Booted` while running `./run-ios` this might just mean we need to open GUI (then restart the runner script)
@@ -150,3 +118,9 @@ export function testProps (id) {
 
 <Component {...testProps('foo')} />
 ```
+
+## License
+
+MIT
+
+![logo](/static/logo.png)

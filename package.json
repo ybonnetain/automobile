@@ -4,8 +4,10 @@
     "description": "Gherkin based end-to-end automations for iOS and Android",
     "main": "index.js",
     "scripts": {
+        "preios": "appium &",
         "android": "better-npm-run test:func:android",
-        "ios": "better-npm-run test:func:ios"
+        "ios": "better-npm-run test:func:ios",
+        "postinstall": "./postinstall.sh"
     },
     "betterScripts": {
         "test:func:android": {
