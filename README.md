@@ -26,7 +26,7 @@ With the help of `npm run appium-doctor` and the following commands
 ### iOS
 
 - get sim / device UUID: `instruments -s devices` or `xcrun simctl list`
-- In order to send key strokes: `Simulator -> Hardware -> Keyboard -> Connect Hardware Keyboard`
+- In order to send key strokes: `Simulator -> I/O -> Keyboard -> Connect Hardware Keyboard`
 
 ### Android
 
